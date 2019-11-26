@@ -1,6 +1,7 @@
 package com.example.draganddraw;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.AttributeSet;
@@ -20,6 +21,20 @@ public class BoxDrawingView extends View {
     public BoxDrawingView(Context context){
         this(context, null);
     }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        canvas.drawPaint(mBackgroundPaint);
+        for (Box box : mBoxen){
+            float left = Math.min(box.getOrigin().x, box.getCurrent().x);
+            float right = Math.max(box.getOrigin().x, box.getCurrent().x);
+            float top = Math.min(box.getOrigin().y, box.getCurrent().y);
+            float bottom = Math.max(box.getOrigin().y, box.getCurrent().y);
+            canvas.drawRect(left, top, right, bottom, mBoxPaint);
+        }
+
+    }
+
     public BoxDrawingView(Context context, AttributeSet attrs){
         super(context, attrs);
 
